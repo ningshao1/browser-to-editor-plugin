@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 try {
-  const exists = fs.accessSync(path.resolve(__dirname, '../dist/ui'), fs.constants.F_OK)
+  fs.accessSync(path.resolve(__dirname, '../dist/ui'), fs.constants.F_OK)
 } catch (error) {
   fs.mkdirSync(path.resolve(__dirname, '../dist/ui'))
 }
