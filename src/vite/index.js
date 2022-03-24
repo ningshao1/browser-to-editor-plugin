@@ -12,7 +12,7 @@ export default function (option = {}) {
   return {
     name: 'vite-plugin-vue-jumpCode',
     apply: 'serve',
-    buildStart(...options) {
+    buildStart() {
       openLaunchEditor(port => {
         defaultPort = port
       }, option.code)

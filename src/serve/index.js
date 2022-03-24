@@ -26,7 +26,6 @@ export default function openLaunchEditor(callback, code) {
     const col = parmas.get('col')
     const line = parmas.get('line')
     launch(`${path}:${line}:${col}`, code || undefined, (fileName, errorMsg) => {
-      debugger
       if (errorMsg) {
         throw errorMsg
       }
@@ -37,7 +36,6 @@ export default function openLaunchEditor(callback, code) {
       port: 5000,
     })
     .then(port => {
-      console.log(port)
       app.listen(port, () => {
         callback && callback(port)
       })

@@ -3,18 +3,15 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: 'eslint:recommended',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-    ENV: true,
-  },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   rules: {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
+    'no-console': 'error',
+    'no-debugger': 'error',
+    semi: ['error', 'never'],
   },
 }
