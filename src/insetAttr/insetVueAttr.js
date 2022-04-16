@@ -2,7 +2,7 @@ const InjectColumnName = 'w__col'
 const InjectLineName = 'w__line'
 const InjectPathName = 'w__path'
 const InjectNodeName = 'w__node'
-export default function InsetAttr(ast, source, filePath) {
+function InsetAttr(ast, source, filePath) {
   if (ast?.type === 1) {
     if (ast.children && ast.children.length) {
       for (let i = ast.children.length - 1; i >= 0; i--) {
@@ -26,3 +26,4 @@ export default function InsetAttr(ast, source, filePath) {
 
   return source
 }
+export default InsetAttr

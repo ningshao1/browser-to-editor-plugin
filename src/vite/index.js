@@ -22,7 +22,11 @@ export default function (option = {}) {
         const vueParserContent = parse(source) // vue文件parse后的内容
         const domAst = vueParserContent.descriptor.template.ast // template开始的dom ast结构
         const templateSource = domAst.loc.source // template部分的原字符串
-        const newTemplateSource = InsetAttr(domAst, templateSource, filePath)
+        const newTemplateSource = insetVueAttr.default(
+          domAst,
+          Array.from({ length: startLine }).fill('').join('\n') + templateSource, // 解决在tmeplate前面加了注释之类的信息 导致行数计算错误
+          this.resourcePath,
+        )
         const newContent = source.replace(templateSource, newTemplateSource)
         return newContent
       }
