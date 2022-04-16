@@ -4,10 +4,13 @@
   <a href="https://www.npmjs.com/package/browser-to-editor-plugin" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/dt/browser-to-editor-plugin" alt="NPM Downloads" /></a>
   <!-- <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/npm/node/browser-to-editor-plugin" alt="Node.js" /></a> -->
   <a href="https://github.com/ningshao1/browser-to-editor-plugin/blob/master/LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/github/license/ningshao1/browser-to-editor-plugin" alt="License" /></a>
-</p>S
+</p>
+
 ### 安装
 
-`npm i browser-to-editor-plugin -S`
+```Bash
+npm i browser-to-editor-plugin -S
+```
 
 ### 使用
 
