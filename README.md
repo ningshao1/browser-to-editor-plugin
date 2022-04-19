@@ -10,6 +10,9 @@
 
 一键直接跳转到本地 IDE 源码 支持 vite 和 webpack
 
+## 效果
+
+![image](https://raw.githubusercontent.com/ningshao1/browser-to-editor-plugin/master/case.gif)
 ## 安装
 
 ```Bash
