@@ -21,7 +21,9 @@ var code = fs.readFileSync(path.resolve(__dirname, '../ui/index.html'), 'utf-8')
 var defaultPort = 5000;
 
 var browserToEditorPlugin = function () {
-  function browserToEditorPlugin(props) {
+  function browserToEditorPlugin() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, browserToEditorPlugin);
 
     this.code = props.code;

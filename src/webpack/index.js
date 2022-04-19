@@ -4,7 +4,7 @@ const openLaunchEditor = require('../serve')
 const code = fs.readFileSync(path.resolve(__dirname, '../ui/index.html'), 'utf-8')
 let defaultPort = 5000
 class browserToEditorPlugin {
-  constructor(props) {
+  constructor(props={}) {
     this.code = props.code
   }
   apply(compiler) {

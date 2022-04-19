@@ -10,13 +10,13 @@
 
 一键直接跳转到本地 IDE 源码 支持 vite 和 webpack
 
-### 安装
+## 安装
 
 ```Bash
 npm i browser-to-editor-plugin -S
 ```
 
-### 使用
+## 使用
 
 ### vite
 

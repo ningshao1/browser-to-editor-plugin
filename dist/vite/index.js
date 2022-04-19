@@ -42,9 +42,11 @@ function _default() {
         var vueParserContent = (0, _compilerSfc.parse)(source);
         var domAst = vueParserContent.descriptor.template.ast;
         var templateSource = domAst.loc.source;
-        var newTemplateSource = insetVueAttr["default"](domAst, Array.from({
+
+        var newTemplateSource = _insetVueAttr["default"]["default"](domAst, Array.from({
           length: startLine
         }).fill('').join('\n') + templateSource, this.resourcePath);
+
         var newContent = source.replace(templateSource, newTemplateSource);
         return newContent;
       }
