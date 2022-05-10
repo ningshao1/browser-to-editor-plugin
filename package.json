@@ -1,6 +1,6 @@
 {
   "name": "browser-to-editor-plugin",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "用于在浏览器选中元素跳转到编辑器中代码的位置",
   "main": "dist/index.js",
   "scripts": {
