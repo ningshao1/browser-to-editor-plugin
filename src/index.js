@@ -1,2 +1,2 @@
 export { default as viteBrowserToEditor } from './vite'
-export { default as webPpackBrowserToEditor } from './webpack'
+export { default as webpackBrowserToEditor } from './webpack'

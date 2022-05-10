@@ -9,7 +9,7 @@ Object.defineProperty(exports, "viteBrowserToEditor", {
     return _vite["default"];
   }
 });
-Object.defineProperty(exports, "webPpackBrowserToEditor", {
+Object.defineProperty(exports, "webpackBrowserToEditor", {
   enumerable: true,
   get: function get() {
     return _webpack["default"];

@@ -4,10 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var InjectColumnName = 'w__col';
-var InjectLineName = 'w__line';
-var InjectPathName = 'w__path';
-var InjectNodeName = 'w__node';
+
+var _const = require("../const");
 
 function InsetAttr(ast, source, filePath) {
   if ((ast === null || ast === void 0 ? void 0 : ast.type) === 1) {
@@ -24,7 +22,7 @@ function InsetAttr(ast, source, filePath) {
     var columnToInject = column + ast.tag.length;
     var targetLine = codeLines[line - 1];
     var nodeName = ast.tag;
-    var newLine = targetLine.slice(0, columnToInject) + " ".concat(InjectLineName, "=\"").concat(line, "\" ").concat(InjectColumnName, "=\"").concat(column, "\" ").concat(InjectPathName, "=\"").concat(filePath, "\" ").concat(InjectNodeName, "=\"").concat(nodeName, "\"") + targetLine.slice(columnToInject);
+    var newLine = targetLine.slice(0, columnToInject) + " ".concat(_const.InjectLineName, "=\"").concat(line, "\" ").concat(_const.InjectColumnName, "=\"").concat(column, "\" ").concat(_const.InjectPathName, "=\"").concat(filePath, "\" ").concat(_const.InjectNodeName, "=\"").concat(nodeName, "\"") + targetLine.slice(columnToInject);
     codeLines[line - 1] = newLine;
     source = codeLines.join('\n');
   }

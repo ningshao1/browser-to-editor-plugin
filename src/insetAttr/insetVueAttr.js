@@ -1,7 +1,4 @@
-const InjectColumnName = 'w__col'
-const InjectLineName = 'w__line'
-const InjectPathName = 'w__path'
-const InjectNodeName = 'w__node'
+import { InjectNodeName, InjectLineName, InjectPathName, InjectColumnName } from '../const'
 function InsetAttr(ast, source, filePath) {
   if (ast?.type === 1) {
     if (ast.children && ast.children.length) {

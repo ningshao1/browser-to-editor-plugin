@@ -1,10 +1,9 @@
-import { parse } from '@vue/compiler-sfc'
-import InsetAttr from '../insetAttr/insetVueAttr'
+import openLaunchEditor from '../serve'
 const fs = require('fs')
 const path = require('path')
+const { vueLoader, reactLoader } = require('../loader')
 const code = fs.readFileSync(path.resolve(__dirname, '../ui/index.html'), 'utf-8')
-import openLaunchEditor from '../serve'
-var defaultPort = 5000 //默认端口
+let defaultPort = 5000 //默认端口
 export default function (option = {}) {
   if (typeof option !== 'object') {
     throw 'Please pass in the correct configuration items'
@@ -19,16 +18,10 @@ export default function (option = {}) {
     },
     transform(source, filePath) {
       if (/\.vue$/.test(filePath)) {
-        const vueParserContent = parse(source) // vue文件parse后的内容
-        const domAst = vueParserContent.descriptor.template.ast // template开始的dom ast结构
-        const templateSource = domAst.loc.source // template部分的原字符串
-        const newTemplateSource = InsetAttr.default(
-          domAst,
-          Array.from({ length: startLine }).fill('').join('\n') + templateSource, // 解决在tmeplate前面加了注释之类的信息 导致行数计算错误
-          this.resourcePath,
-        )
-        const newContent = source.replace(templateSource, newTemplateSource)
-        return newContent
+        return vueLoader(source)
+      }
+      if (/\.jsx?$/.test(filePath)) {
+        return reactLoader(source)
       }
     },
     transformIndexHtml(html) {

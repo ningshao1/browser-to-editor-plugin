@@ -17,8 +17,10 @@ function createServer(requsetOpenLaunchEditor) {
     var status = 200;
 
     if (urlParams.pathname === '/_open-edit_') {
+      console.time('testTime')
       status = 200;
       requsetOpenLaunchEditor && requsetOpenLaunchEditor(urlParams.searchParams);
+      console.timeEnd('testTime')
     } else status = 404;
 
     res.writeHead(status, {

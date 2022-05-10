@@ -1,13 +1,13 @@
 {
   "name": "browser-to-editor-plugin",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "用于在浏览器选中元素跳转到编辑器中代码的位置",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src -d dist && node build/index.js",
+    "build": "babel src -d dist --ignore src/test/**/* --no-copy-ignored && node build/index.js",
     "lint": "eslint src",
     "fix": "eslint src --fix",
-    "test": "node src/webpack/test.loader.js"
+    "test": "node src/test/index.js"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.31",
+    "jscodeshift": "^0.13.1",
     "launch-editor": "^2.3.0",
     "loader-runner": "^4.2.0",
     "portfinder": "^1.0.28"

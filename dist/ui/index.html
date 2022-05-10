@@ -24,6 +24,21 @@
       display: none;
     }
 
+    @keyframes loading {
+      0% {
+        transform: rotateZ(0deg);
+      }
+
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+
+    .w--icon--loading {
+      display: none;
+      animation: loading 1s infinite
+    }
+
   </style>
   </div>
   <svg class="w--icon w--icon--open" viewBox="0 0 1024 1024">
@@ -38,8 +53,17 @@
       d="M883.2 748.8512a38.4 38.4 0 0 0 38.4-38.4V534.528c0-65.1264-50.8928-118.784-116.8384-128.256 0.6144-2.7136 1.6384-5.3248 1.6384-8.192V301.7728c0-162.3552-132.096-294.4-294.4-294.4s-294.4 132.0448-294.4 294.4v101.12c0 1.2288 0.6144 2.304 0.7168 3.4816C152.7808 416.256 102.4 469.7088 102.4 534.528v351.9488c0 71.7824 61.6448 130.2016 137.3696 130.2016h544.4608c53.5552 0 102.6048-29.9008 124.8768-76.0832 2.7136-5.5296 5.0176-11.3664 6.8608-17.3056a38.4 38.4 0 1 0-73.3184-22.9888 48.128 48.128 0 0 1-2.6624 6.8096c-9.6256 19.968-31.5392 32.8192-55.808 32.8192H239.7696c-32.8192 0-60.5696-24.4736-60.5696-53.4016V534.528c0-29.44 27.1872-53.4016 60.5696-53.4016h544.4608c33.3824 0 60.5696 23.9616 60.5696 53.4016v175.9744a38.4 38.4 0 0 0 38.4 38.3488zM294.4 301.7728c0-120.0128 97.6384-217.6 217.6-217.6s217.6 97.5872 217.6 217.6v96.3072c0 2.2016 0.9216 4.1472 1.28 6.2464h-436.736c0-0.512 0.3072-0.9216 0.3072-1.4336V301.7728z"
       fill="#01CA81"></path>
   </svg>
+  <svg t="1652162628889" class="w--icon w--icon--loading" viewBox="0 0 1024 1024" version="1.1">
+    <title>打开编辑器中</title>
+    <path
+      d="M521.216 960c-247.42-0.78-447.36-201.99-446.58-449.41 0.78-247.43 201.99-447.37 449.42-446.59 133.24 0.42 259.38 60.13 344.17 162.9a454.492 454.492 0 0 1 40.73 59.06c10.43 19.93 2.73 44.54-17.2 54.97-18.75 9.81-41.9 3.62-53.25-14.24-101.15-175.36-325.3-235.51-500.66-134.36-175.35 101.15-235.51 325.3-134.36 500.66 101.15 175.36 325.3 235.51 500.66 134.36 12.68-7.31 24.9-15.38 36.61-24.15 17.95-13.56 43.49-10 57.05 7.94 13.56 17.95 10 43.49-7.95 57.05l-0.23 0.17A448 448 0 0 1 521.216 960z"
+      fill="#1296db" p-id="2144"></path>
+    <path
+      d="M739.926 318.14l176.35-143.77c8.78-7.03 21.6-5.61 28.62 3.17a20.4 20.4 0 0 1 4.37 14.75l-16.29 160.06c-1.06 11.2-11 19.41-22.2 18.35-0.07-0.01-0.14-0.01-0.2-0.02l-160.06-16.29c-11.19-1.12-19.36-11.1-18.24-22.29 0.55-5.5 3.31-10.54 7.65-13.96z"
+      fill="#1296db" p-id="2145"></path>
+  </svg>
   <div class="w--shade"
-    style="cursor: pointer;background: rgba(65, 184, 131, .35);position: absolute;left: 0;top: 0;height: 0;width: 0;display: none;border-radius: 3px;pointer-events: none;z-index: 100000;">
+    style="cursor: pointer;background: rgba(65, 184, 131, .35);position: fixed;left: 0;top: 0;height: 0;width: 0;display: none;border-radius: 3px;pointer-events: none;z-index: 100000;">
     <div class="w--label" style="position: absolute;left: 0;border: 0.5px solid rgba(65, 184, 131, 1); border-radius: 3px;background: #fff;font-size: 11px;padding: 5px 8px;font-family: monospace;text-align: center;
       background-clip: padding-box;
       display: inline-block;
@@ -48,149 +72,161 @@
     </div>
   </div>
   <script>
-    var includePathNode = null,
-      moveNode = null,
-      filePath = null,
-      nodeName = null,
-      col = null,
-      line = null
-    document.querySelector('.w--icon--open').onclick = iconClickHandler
-    document.querySelector('.w--icon--close').onclick = iconClickHandler
+    (function () {
+      var includePathNode = null,
+        moveNode = null,
+        filePath = null,
+        nodeName = null,
+        col = null,
+        line = null
+      document.querySelector('.w--icon--open').onclick = iconClickHandler
+      document.querySelector('.w--icon--close').onclick = iconClickHandler
 
-    function iconClickHandler(e) {
-      const {
-        target
-      } = e
-      const className = target.getAttribute('class')
-      if (className && className.includes('w--icon--open')) {
-        document.querySelector(".w--icon--close").style.display = 'block'
-        document.querySelector(".w--icon--open").style.display = "none"
-        window.removeEventListener('mousemove', listenMovehandler)
-        document.removeEventListener("click", shadeClickHandler)
-      } else {
-        document.querySelector(".w--icon--open").style.display = 'block'
-        document.querySelector(".w--icon--close").style.display = "none"
-        window.addEventListener('mousemove', listenMovehandler)
-        document.addEventListener("click", shadeClickHandler)
-      }
-    }
-
-    /**
-     * 监听鼠标移动
-     */
-    function listenMovehandler(e) {
-      const {
-        path,
-        target
-      } = e
-      if (moveNode === target) return
-      moveNode = target
-      const {
-        className
-      } = target
-      if (typeof className === 'string' && className.includes('w--shade')) return
-      for (let i = 0; i < path.length; i++) {
-        const node = path[i]
-        if (node && node.getAttribute && node.getAttribute('w__path')) {
-          includePathNode = node
-          break
+      function iconClickHandler(e) {
+        const {
+          target
+        } = e
+        const className = target.getAttribute('class')
+        if (className && className.includes('w--icon--open')) {
+          document.querySelector(".w--icon--close").style.display = 'block'
+          document.querySelector(".w--icon--open").style.display = "none"
+          document.querySelector(".w--icon--loading").style.display = "none"
+          window.removeEventListener('mousemove', listenMovehandler)
+          document.removeEventListener("click", shadeClickHandler)
+        } else {
+          document.querySelector(".w--icon--open").style.display = 'block'
+          document.querySelector(".w--icon--close").style.display = "none"
+          document.querySelector(".w--icon--loading").style.display = "none"
+          window.addEventListener('mousemove', listenMovehandler)
+          document.addEventListener("click", shadeClickHandler)
         }
-        includePathNode = null
       }
-      if (!includePathNode) {
-        if (document.querySelector('.w--shade').style.display === 'none') return
+
+      /**
+       * 监听鼠标移动
+       */
+      function listenMovehandler(e) {
+        const {
+          path,
+          target
+        } = e
+        if (moveNode === target) return
+        moveNode = target
+        const {
+          className
+        } = target
+        if (typeof className === 'string' && className.includes('w--shade')) return
+        for (let i = 0; i < path.length; i++) {
+          const node = path[i]
+          if ((node && node.getAttribute && node.getAttribute('w__path')) || node['w__path']) {
+            includePathNode = node
+            break
+          }
+          includePathNode = null
+        }
+        if (!includePathNode) {
+          if (document.querySelector('.w--shade').style.display === 'none') return
+          setShadePosition({
+            height: 0,
+            width: 0,
+            left: 0,
+            top: 0,
+            display: "none"
+          })
+          return
+        }
+        filePath = includePathNode.getAttribute("w__path") || includePathNode['w__path']
+        nodeName = includePathNode.getAttribute("w__node") || includePathNode['w__node']
+        col = includePathNode.getAttribute("w__col") || includePathNode['w__col']
+        line = includePathNode.getAttribute("w__line") || includePathNode['w__line']
+        const {
+          height,
+          width,
+          left,
+          top,
+          bottom
+        } = includePathNode.getBoundingClientRect();
         setShadePosition({
-          height: 0,
-          width: 0,
-          left: 0,
-          top: 0,
-          display: "none"
+          height,
+          width,
+          left,
+          top,
+          display: 'block'
         })
-        return
-      }
-      filePath = includePathNode.getAttribute("w__path")
-      nodeName = includePathNode.getAttribute("w__node")
-      col = includePathNode.getAttribute("w__col")
-      line = includePathNode.getAttribute("w__line")
-      const {
-        height,
-        width,
-        left,
-        top,
-        bottom
-      } = includePathNode.getBoundingClientRect();
-      setShadePosition({
-        height,
-        width,
-        left,
-        top,
-        display: 'block'
-      })
-      crateLabel({
-        height,
-        width,
-        nodeName,
-        top,
-        bottom
-      })
-    }
-
-    function shadeClickHandler(e) {
-      if (document.querySelector('.w--shade').style.display === 'block') {
-        const requset = new XMLHttpRequest()
-        requset.open("GET", `http://localhost:${__port__}/_open-edit_?path=${filePath}&col=${col}&line=${line}`)
-        requset.send()
-        iconClickHandler({
-          target: document.querySelector(".w--icon--open")
+        crateLabel({
+          height,
+          width,
+          nodeName,
+          top,
+          bottom
         })
-        document.querySelector('.w--shade').style.display = 'none'
       }
-    }
 
-    /**
-     * 设置背景
-     */
-    function setShadePosition(position) {
-      const {
-        height,
-        width,
-        left,
-        top,
-        bottom,
-        display
-      } = position
-      const shade = document.querySelector(".w--shade");
-      shade.style.height = height + 'px'
-      shade.style.width = width + 'px'
-      shade.style.left = left + 'px'
-      shade.style.top = top + 'px'
-      shade.style.display = display;
-    }
-    /**创建标签*/
-    function crateLabel(option) {
-      const {
-        nodeName,
-        width,
-        height,
-        bottom,
-        top
-      } = option
+      function shadeClickHandler(e) {
+        if (e.target.nodeName === 'svg' && e.target.classList.value.includes('w--icon')) return
+        if (document.querySelector('.w--shade').style.display === 'block') {
+          document.querySelector(".w--icon--open").style.display = 'none'
+          document.querySelector(".w--icon--close").style.display = "none"
+          document.querySelector(".w--icon--loading").style.display = "block"
+          const requset = new XMLHttpRequest()
+          requset.open("GET", `http://localhost:${__port__}/_open-edit_?path=${filePath}&col=${col}&line=${line}`)
+          requset.send()
+          requset.onloadend = e => {
+            iconClickHandler({
+              target: document.querySelector(".w--icon--open")
+            })
+            document.querySelector('.w--shade').style.display = 'none'
+          }
 
-      const labelElement = document.querySelector('.w--label')
-      labelElement.innerHTML =
-        `<<span style="font-size:16px;color:rgba(65, 184, 131, 1);font-weight:600">${nodeName}</span>> ${parseInt(width)} x  ${parseInt(height)}`
 
-      if (top >= 100) {
-        labelElement.style.bottom = nullJS
-        labelElement.style.top = '-42px'
-      } else if (bottom >= 100) {
-        labelElement.style.top = null
-        labelElement.style.bottom = '-28px'
-      } else {
-        labelElement.style.top = null
-        labelElement.style.bottom = '2px'
+        }
       }
-    }
+
+      /**
+       * 设置背景
+       */
+      function setShadePosition(position) {
+        const {
+          height,
+          width,
+          left,
+          top,
+          bottom,
+          display
+        } = position
+        const shade = document.querySelector(".w--shade");
+        shade.style.height = height + 'px'
+        shade.style.width = width + 'px'
+        shade.style.left = left + 'px'
+        shade.style.top = top + 'px'
+        shade.style.display = display;
+      }
+      /**创建标签*/
+      function crateLabel(option) {
+        const {
+          nodeName,
+          width,
+          height,
+          bottom,
+          top
+        } = option
+
+        const labelElement = document.querySelector('.w--label')
+        labelElement.innerHTML =
+          `<<span style="font-size:16px;color:rgba(65, 184, 131, 1);font-weight:600">${nodeName}</span>> ${parseInt(width)} x  ${parseInt(height)}`
+
+        if (top >= 100) {
+          labelElement.style.bottom = null
+          labelElement.style.top = '-42px'
+        } else if (bottom >= 100) {
+          labelElement.style.top = null
+          labelElement.style.bottom = '-28px'
+        } else {
+          labelElement.style.top = null
+          labelElement.style.bottom = '2px'
+        }
+      }
+    })()
 
   </script>
 

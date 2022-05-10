@@ -13,6 +13,7 @@
 ## 效果
 
 ![image](https://raw.githubusercontent.com/ningshao1/browser-to-editor-plugin/master/case.gif)
+
 ## 安装
 
 ```Bash
@@ -41,12 +42,37 @@ vue(),
 ### webpack
 
 ```javascript
-const { webPpackBrowserToEditor } = require('browser-to-editor-plugin')
+const { webpackBrowserToEditor } = require('browser-to-editor-plugin')
 module.exports = {
   plugins: [
       ....
-      new webPpackBrowserToEditor()
+      new webpackBrowserToEditor()
       ...
       ],
 }
 ```
+
+### taro
+
+```javascript
+/** config/dev.js */
+
+const { webpackBrowserToEditor } = require('browser-to-editor-plugin')
+module.exports = {
+  h5: {
+    ...
+    webpackChain(chain) {
+      chain.plugin('toEdit').use(webPpackBrowserToEditor)
+      ...
+      ...
+    },
+  },
+}
+```
+
+**注意**：在`taro`中只支持 H5 端使用`viteBrowserToEditor`
+
+### 注意项
++ 在浏览器中模拟使用移动端时,不会显示遮罩层直接点击想要跳转的元素即可
++ 插件只测试了谷歌浏览器，其余浏览器暂没测试
+

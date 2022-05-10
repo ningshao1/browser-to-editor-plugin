@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = _default;
 
-var _compilerSfc = require("@vue/compiler-sfc");
-
-var _insetVueAttr = _interopRequireDefault(require("../insetAttr/insetVueAttr"));
-
 var _serve = _interopRequireDefault(require("../serve"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -18,6 +14,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 var fs = require('fs');
 
 var path = require('path');
+
+var _require = require('../loader'),
+    vueLoader = _require.vueLoader,
+    reactLoader = _require.reactLoader;
 
 var code = fs.readFileSync(path.resolve(__dirname, '../ui/index.html'), 'utf-8');
 var defaultPort = 5000;
@@ -39,16 +39,11 @@ function _default() {
     },
     transform: function transform(source, filePath) {
       if (/\.vue$/.test(filePath)) {
-        var vueParserContent = (0, _compilerSfc.parse)(source);
-        var domAst = vueParserContent.descriptor.template.ast;
-        var templateSource = domAst.loc.source;
+        return vueLoader(source);
+      }
 
-        var newTemplateSource = _insetVueAttr["default"]["default"](domAst, Array.from({
-          length: startLine
-        }).fill('').join('\n') + templateSource, this.resourcePath);
-
-        var newContent = source.replace(templateSource, newTemplateSource);
-        return newContent;
+      if (/\.jsx?$/.test(filePath)) {
+        return reactLoader(source);
       }
     },
     transformIndexHtml: function transformIndexHtml(html) {

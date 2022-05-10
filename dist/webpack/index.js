@@ -32,13 +32,24 @@ var browserToEditorPlugin = function () {
   _createClass(browserToEditorPlugin, [{
     key: "apply",
     value: function apply(compiler) {
-      console.log(this);
-      compiler.options.module.rules.push({
+      var _compiler$options$mod;
+
+      (_compiler$options$mod = compiler.options.module.rules).push.apply(_compiler$options$mod, [{
         test: /\.vue$/,
         use: {
-          loader: path.resolve(__dirname, './vLoader.js')
-        }
-      });
+          loader: path.resolve(__dirname, '../loader/vueLoader.js')
+        },
+        include: [path.resolve('src')],
+        exclude: /node_modules/
+      }, {
+        test: /\.jsx?$/,
+        use: {
+          loader: path.resolve(__dirname, '../loader/reactLoader.js')
+        },
+        include: [path.resolve('src')],
+        exclude: /node_modules/
+      }]);
+
       openLaunchEditor["default"](function (port) {
         defaultPort = port;
       }, this.code);

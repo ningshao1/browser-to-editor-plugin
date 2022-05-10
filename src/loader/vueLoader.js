@@ -1,6 +1,6 @@
 const insetVueAttr = require('../insetAttr/insetVueAttr')
 const sfc = require('@vue/compiler-sfc')
-function vLoader(source) {
+export default function (source) {
   const vueParse = sfc.parse(source)
   const domAst = vueParse.descriptor.template.ast // template开始的dom ast结构
   const templateSource = domAst.loc.source // template部分的原字符串
@@ -13,4 +13,3 @@ function vLoader(source) {
   const newContent = source.replace(templateSource, newTemplateSource)
   return newContent
 }
-module.exports = vLoader
