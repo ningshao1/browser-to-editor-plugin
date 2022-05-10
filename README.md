@@ -72,7 +72,7 @@ module.exports = {
 
 插件添加后，启动项目左下角会有一个锁的图标点击开启即可使用
 
-**注意**：在`taro`中只支持 H5 端使用`viteBrowserToEditor`
+**注意**：在`taro`中只支持 H5 端使用该插件
 
 ### 注意项
 
