@@ -3,8 +3,6 @@ const J = require('jscodeshift')
 const babelParser = require('./parser')
 export default function (source) {
   try {
-    console.log('fileName:',this.resourcePath)
-    console.time('compiler')
     const root = J(source, {
       parser: babelParser(),
     })
@@ -17,10 +15,8 @@ export default function (source) {
       const line = J.jsxAttribute(J.jsxIdentifier(InjectLineName), J.stringLiteral(String(item.value.loc.start.line)))
       item.value.attributes.push(col, name, path, line)
     })
-    console.timeEnd('compiler')
     return root.toSource()
   } catch (e) {
-    console.log('err:',e)
     return source
   }
 }

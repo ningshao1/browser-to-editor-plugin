@@ -16,7 +16,7 @@
 ## 安装
 
 ```Bash
-npm i browser-to-editor-plugin -S
+npm i browser-to-editor-plugin -SD
 ```
 
 ## 使用
