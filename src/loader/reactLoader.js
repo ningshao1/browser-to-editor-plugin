@@ -1,8 +1,13 @@
 import { InjectNodeName, InjectLineName, InjectPathName, InjectColumnName } from '../const'
 const J = require('jscodeshift')
+const babelParser = require('./parser')
 export default function (source) {
   try {
-    const root = J(source)
+    console.log('fileName:',this.resourcePath)
+    console.time('compiler')
+    const root = J(source, {
+      parser: babelParser(),
+    })
     const JSX = root.find(J.JSXOpeningElement)
     JSX.forEach(item => {
       if (!item.value.name.name) return
@@ -12,8 +17,10 @@ export default function (source) {
       const line = J.jsxAttribute(J.jsxIdentifier(InjectLineName), J.stringLiteral(String(item.value.loc.start.line)))
       item.value.attributes.push(col, name, path, line)
     })
+    console.timeEnd('compiler')
     return root.toSource()
   } catch (e) {
+    console.log('err:',e)
     return source
   }
 }

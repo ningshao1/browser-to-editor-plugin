@@ -9,7 +9,7 @@ export default function (option = {}) {
     throw 'Please pass in the correct configuration items'
   }
   return {
-    name: 'vite-plugin-vue-jumpCode',
+    name: 'browser-to-editor',
     apply: 'serve',
     buildStart() {
       openLaunchEditor(port => {
@@ -17,11 +17,23 @@ export default function (option = {}) {
       }, option.code)
     },
     transform(source, filePath) {
-      if (/\.vue$/.test(filePath)) {
-        return vueLoader(source)
+      if (/\.vue$/.test(filePath) && !/\/node_modules\//.test(filePath)) {
+        return vueLoader.call(
+          {
+            ...this,
+            resourcePath: filePath,
+          },
+          source,
+        )
       }
-      if (/\.jsx?$/.test(filePath)) {
-        return reactLoader(source)
+      if (/\.(jsx?)|(tsx)$/.test(filePath) && !/\/node_modules\//.test(filePath)) {
+        return reactLoader.call(
+          {
+            ...this,
+            resourcePath: filePath,
+          },
+          source,
+        )
       }
     },
     transformIndexHtml(html) {

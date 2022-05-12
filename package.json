@@ -8,7 +8,7 @@
     "lint": "eslint src",
     "fix": "eslint src --fix",
     "test": "node src/test/index.js",
-    "publish":"npm run build&&npm publish"
+    "publish": "npm run build&&npm publish"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -16,6 +16,7 @@
   "author": "maoning",
   "license": "MIT",
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.17.9",
     "@vue/compiler-sfc": "^3.2.31",
     "jscodeshift": "^0.13.1",
     "launch-editor": "^2.3.0",

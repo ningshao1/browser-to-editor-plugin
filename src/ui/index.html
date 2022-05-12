@@ -106,6 +106,7 @@
        * 监听鼠标移动
        */
       function listenMovehandler(e) {
+        if(document.querySelector(".w--icon--loading").style.display==='block') return
         const {
           path,
           target
