@@ -9,12 +9,12 @@ export default function (option = {}) {
     throw 'Please pass in the correct configuration items'
   }
   return {
-    name: 'browser-to-editor',
+    name: 'browser-to-editor-plugin',
     apply: 'serve',
     buildStart() {
       openLaunchEditor(port => {
         defaultPort = port
-      }, option.code)
+      }, option?.code)
     },
     transform(source, filePath) {
       if (/\.vue$/.test(filePath) && !/\/node_modules\//.test(filePath)) {

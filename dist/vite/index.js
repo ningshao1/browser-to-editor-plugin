@@ -36,12 +36,12 @@ function _default() {
   }
 
   return {
-    name: 'browser-to-editor',
+    name: 'browser-to-editor-plugin',
     apply: 'serve',
     buildStart: function buildStart() {
       (0, _serve["default"])(function (port) {
         defaultPort = port;
-      }, option.code);
+      }, option === null || option === void 0 ? void 0 : option.code);
     },
     transform: function transform(source, filePath) {
       if (/\.vue$/.test(filePath) && !/\/node_modules\//.test(filePath)) {
