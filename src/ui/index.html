@@ -107,10 +107,11 @@
        */
       function listenMovehandler(e) {
         if(document.querySelector(".w--icon--loading").style.display==='block') return
-        const {
+        let {
           path,
           target
         } = e
+        !path&& (path=e.composedPath())
         if (moveNode === target) return
         moveNode = target
         const {
