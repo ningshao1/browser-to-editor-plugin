@@ -2,7 +2,8 @@ const insetVueAttr = require('../insetAttr/insetVueAttr')
 const sfc = require('@vue/compiler-sfc')
 export default function (source) {
   const vueParse = sfc.parse(source)
-  const domAst = vueParse.descriptor.template.ast // template开始的dom ast结构
+  const domAst = vueParse?.descriptor?.template?.ast // template开始的dom ast结构
+  if(!domAst) return source  //部分特殊的组件无法解析则原样返回不做修改
   const templateSource = domAst.loc.source // template部分的原字符串
   const startLine = domAst.loc.start.line
   const newTemplateSource = insetVueAttr.default(
